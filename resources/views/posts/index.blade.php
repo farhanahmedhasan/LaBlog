@@ -1,4 +1,6 @@
-<h1>
+@vite('resources/css/app.css')
+
+<h1 class="bg-red-600">
     Hello bitches 💩
 </h1>
 
