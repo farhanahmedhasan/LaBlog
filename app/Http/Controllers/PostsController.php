@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-
 class PostsController extends Controller
 {
     /**
@@ -14,12 +13,9 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = DB::table('posts')
-            ->avg('min_to_read');
+       $posts =  Post::orderBy('updated_at', 'desc')->get();
 
-        
-
-        return view('posts.index');
+        return view('posts.index', ['posts'=> $posts]);
     }
 
     /**
@@ -51,7 +47,11 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        return $id;
+        $post = Post::findOrFail($id);
+
+        return view('posts.show', [
+            'post' => $post
+        ]);
     }
 
     /**
