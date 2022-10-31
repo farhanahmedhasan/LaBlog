@@ -10,8 +10,7 @@
 </head>
 
 <body class="w-full h-full bg-gray-100">
-    @yield('allPosts')
-    @yield('singlePost')
+    @yield('appLayout')
 </body>
 
 </html>

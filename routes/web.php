@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Route;
 
 //HTTP Verbs
 Route::get('/posts', [PostsController::class, 'index'])->name('posts.index');
-Route::get('/posts/{id}', [PostsController::class, 'show'])->name('posts.show');
 
 
 Route::get('/posts/create', [PostsController::class, 'create'])->name('posts.create');
@@ -17,6 +16,8 @@ Route::post('/posts', [PostsController::class, 'store'])->name('posts.store');
 
 
 Route::get('/posts/edit/{id}', [PostsController::class, 'edit'])->name('posts.edit');
+
+Route::get('/posts/{id}', [PostsController::class, 'show'])->name('posts.show');
 Route::patch('/posts/{id}', [PostsController::class, 'update'])->name('posts.update');
 
 
