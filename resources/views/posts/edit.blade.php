@@ -4,7 +4,7 @@
     <div class="w-4/5 mx-auto">
         <div class="text-center pt-20">
             <h1 class="text-3xl text-gray-700">
-                Add new post
+                Edit : {{ $post->title }}
             </h1>
             <hr class="border border-1 border-gray-300 mt-10">
         </div>
@@ -23,26 +23,31 @@
             @endif
         </div>
 
+
+
         <div class="m-auto pt-20">
-            <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
+                @method('PATCH')
 
                 <label for="is_published" class="text-gray-500 text-2xl">
                     Is Published
                 </label>
-                <input type="checkbox" class="bg-transparent border-b-2 inline text-2xl outline-none" name="is_published">
+                <input type="checkbox" {{ $post->is_published ? 'checked' : false }}
+                    class="bg-transparent border-b-2 inline text-2xl outline-none" name="is_published">
 
-                <input type="text" name="title" placeholder="Title..." value="{{ old('title') }}"
+                <input type="text" name="title" value={{ $post->title }}
                     class="bg-transparent block border-b-2 w-full h-20 text-2xl outline-none">
 
-                <input type="text" name="excerpt" placeholder="Excerpt..."
+                <input type="text" name="excerpt" value={{ $post->excerpt }}
                     class="bg-transparent block border-b-2 w-full h-20 text-2xl outline-none">
 
-                <input type="number" name="min_to_read" placeholder="Minutes to read..."
+                <input type="number" name="min_to_read" value={{ $post->min_to_read }}
                     class="bg-transparent block border-b-2 w-full h-20 text-2xl outline-none">
 
                 <textarea name="body" placeholder="Body..."
-                    class="py-20 bg-transparent block border-b-2 w-full h-60 text-xl outline-none"></textarea>
+                    class="py-20 bg-transparent block border-b-2 w-full h-60 text-xl outline-none">
+                {{ $post->body }}</textarea>
 
                 <div class="bg-grey-lighter py-10">
                     <label

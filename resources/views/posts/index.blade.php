@@ -40,6 +40,11 @@
                             </a>
                             on 13-07-2022
                         </span>
+
+                        <a class="block italic text-green-500 border-b-1 border-green-500"
+                            href="{{ route('posts.edit', $post->id) }}">
+                            Edit
+                        </a>
                     </div>
                 </div>
             </div>

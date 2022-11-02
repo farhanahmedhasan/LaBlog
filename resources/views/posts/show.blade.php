@@ -27,6 +27,10 @@
                 </div>
             </div>
 
+            <div>
+                <img class="h-[480px] w-full object-cover" src="{{ Storage::url($post->image_path) }}" alt="">
+            </div>
+
             <div class="pt-10 pb-10 text-gray-900 text-xl">
                 <p class="font-bold text-2xl text-black pt-10">
                     {{ $post->excerpt }}

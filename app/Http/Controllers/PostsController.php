@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Http\Request;
+
 class PostsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
        $posts =  Post::orderBy('updated_at', 'desc')->get();
@@ -18,42 +15,26 @@ class PostsController extends Controller
         return view('posts.index', ['posts'=> $posts]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('posts.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
+
         Post::create([
             'title' => $request->title,
             'excerpt' => $request->excerpt,
             'body' => $request->body,
             'min_to_read' => $request->min_to_read,
-            'image_path' => 'temporary',
+            'image_path' => $request->file('image_path')->store('images'),
             'is_published' => $request->is_published === 'on',
         ]);
 
         return redirect(route('posts.index'));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         $post = Post::findOrFail($id);
@@ -63,35 +44,25 @@ class PostsController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        return view('posts.edit',[
+            'post' => Post::where('id', $id)->first()
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, $id)
     {
-        //
+    
+        Post::where('id',$id)->update([
+            ...$request->except(['_token', '_method']),
+            'is_published' => $request->is_published === 'on',
+            'image_path' => $request->file('image_path')->store('images'),
+        ]);
+
+        return redirect(route('posts.show', $id));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         //
