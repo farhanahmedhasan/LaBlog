@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
-use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
@@ -51,20 +50,29 @@ class PostsController extends Controller
         ]);
     }
 
-    public function update(PostRequest $request, $id)
-    {
+    public function update(PostRequest $request, int $id)
+    {   
+
+        $post = Post::where('id',$id);
     
-        Post::where('id',$id)->update([
+        $post->update([
             ...$request->except(['_token', '_method']),
             'is_published' => $request->is_published === 'on',
-            'image_path' => $request->file('image_path')->store('images'),
         ]);
+
+        if($request->has('image_path')){
+            $post->update([
+                'image_path' => $request->file('image_path')->store('images'),
+            ]);
+        }
 
         return redirect(route('posts.show', $id));
     }
 
     public function destroy($id)
     {
-        //
+        Post::destroy($id);
+
+        return redirect(route('posts.index'))->with('message', 'Post has been deleted');
     }
 }

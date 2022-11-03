@@ -35,6 +35,10 @@
                 <input type="text" name="title" placeholder="Title..." value="{{ old('title') }}"
                     class="bg-transparent block border-b-2 w-full h-20 text-2xl outline-none">
 
+                @error('title')
+                    <p>{{ $message }}</p>
+                @enderror
+
                 <input type="text" name="excerpt" placeholder="Excerpt..."
                     class="bg-transparent block border-b-2 w-full h-20 text-2xl outline-none">
 

@@ -23,12 +23,25 @@ class PostRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'title' => 'required|unique:posts|max:255',
             'excerpt' => 'required',
             'body' => 'required',
-            'image_path' => ['required', 'mimes:jpeg,png,jpg', 'max:5048'],
+            'image_path' => ['mimes:jpeg,png,jpg', 'max:5048'],
             'min_to_read' => 'int|min:0|max:60'
+        ];
+
+        if(in_array($this->method(), ['POST'])){
+            $rules['image_path'] = ['required', 'mimes:jpeg,png,jpg', 'max:5048'];
+        }
+
+        return $rules;
+    }
+
+    public function messages()
+    {
+        return [
+            'title.required' => 'Title issss too much required'
         ];
     }
 }
