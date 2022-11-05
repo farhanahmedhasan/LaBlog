@@ -69,5 +69,9 @@
                 </div>
             </div>
         @endforeach
+
+        <div class="mx-auto w-4/5 pb-10">
+            {{ $posts->links() }}
+        </div>
     </section>
 @endsection
