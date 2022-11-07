@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,7 +25,8 @@ class PostFactory extends Factory
             'body' => $this->faker->paragraph($nbSentences = $randomNumber),
             'min_to_read' => $randomNumber,
             'image_path' => $this->faker->imageUrl(640,480),
-            'is_published' => false
+            'is_published' => false,
+            'user_id' => User::factory()
         ];
     }
 }

@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
+use App\Models\User;
 
 class PostsController extends Controller
 {
     public function index()
     {
-       $posts =  Post::orderBy('updated_at', 'desc')->paginate(20);
+       $posts =  Post::orderBy('updated_at', 'desc')->paginate(20);    
 
         return view('posts.index', ['posts'=> $posts]);
     }
