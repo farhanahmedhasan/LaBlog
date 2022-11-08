@@ -25,8 +25,9 @@ class PostRequest extends FormRequest
 
     public function rules()
     {
+
         $rules = [
-            'title' => ['required','max:255',Rule::unique('posts')->ignore($this->id)],
+            'title' => ['required','max:255',Rule::unique('posts')->ignore($this->post)],
             'excerpt' => 'required',
             'body' => 'required',
             'image_path' => ['mimes:jpeg,png,jpg', 'max:5048'],

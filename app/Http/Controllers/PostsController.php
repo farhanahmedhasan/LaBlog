@@ -76,7 +76,7 @@ class PostsController extends Controller
             ]);
         }
 
-        $post->meta()->update([
+        $post->first()->meta()->update([
             'meta_description' => $request->meta_description,
             'meta_keywords' => $request->meta_keywords,
             'meta_robots' => $request->meta_robots
