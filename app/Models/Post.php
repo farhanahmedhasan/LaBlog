@@ -10,6 +10,7 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'title',
         'excerpt',
         'body',
@@ -20,5 +21,9 @@ class Post extends Model
 
     public function user(){
         return $this->belongsTo(User::class);
+    }
+
+    public function meta(){
+        return $this->hasOne(PostMeta::class);
     }
 }

@@ -59,6 +59,18 @@
                     </label>
                 </div>
 
+                <input type="text" name="meta_description" placeholder="Meta description..."
+                    value={{ $post->meta->meta_description }}
+                    class="bg-transparent block border-b-2 w-full h-20 text-2xl outline-none">
+
+                <input type="text" name="meta_keywords" placeholder="Meta keywords..."
+                    value={{ $post->meta->meta_keywords }}
+                    class="bg-transparent block border-b-2 w-full h-20 text-2xl outline-none">
+
+                <input type="text" name="meta_robots" placeholder="Meta robots..." value={{ $post->meta->meta_robots }}
+                    class="bg-transparent block border-b-2 w-full h-20 text-2xl outline-none mb-8">
+
+
                 <button type="submit"
                     class="uppercase mt-15 bg-blue-500 text-gray-100 text-lg font-extrabold py-4 px-8 rounded-3xl">
                     Submit Post

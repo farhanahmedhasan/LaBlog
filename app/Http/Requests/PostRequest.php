@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule ;
 
 class PostRequest extends FormRequest
 {
@@ -20,11 +21,12 @@ class PostRequest extends FormRequest
      * Get the validation rules that apply to the request.
      *
      * @return array<string, mixed>
-     */
+     */ 
+
     public function rules()
     {
         $rules = [
-            'title' => 'required|unique:posts|max:255',
+            'title' => ['required','max:255',Rule::unique('posts')->ignore($this->id)],
             'excerpt' => 'required',
             'body' => 'required',
             'image_path' => ['mimes:jpeg,png,jpg', 'max:5048'],

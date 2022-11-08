@@ -1,5 +1,11 @@
 @extends('layout.app')
 
+<head>
+    <meta name="description" content="{{ $post->meta->meta_description ?? '' }}" />
+    <meta name="keywords" content="{{ $post->meta->meta_keywords ?? '' }}" />
+    <meta name="robots" content="{{ $post->meta->meta_robots ?? '' }}" />
+</head>
+
 @section('appLayout')
     <section>
         <div class="w-4/5 mx-auto">
@@ -20,9 +26,9 @@
                         Made by:
                         <a href=""
                             class="font-bold text-green-500 italic hover:text-green-400 hover:border-b-2 border-green-400 pb-3 transition-all py-20">
-                            Code With Dary
+                            {{ $post->user->name }}
                         </a>
-                        On 17-07-2022
+                        {{ $post->updated_at->diffforhumans() }}
                     </span>
                 </div>
             </div>

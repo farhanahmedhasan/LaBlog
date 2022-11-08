@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
 {
@@ -23,13 +24,21 @@ class PostsController extends Controller
     public function store(PostRequest $request)
     {
 
-        Post::create([
+        $post = Post::create([
+            'user_id'=> Auth::id(),
             'title' => $request->title,
             'excerpt' => $request->excerpt,
             'body' => $request->body,
             'min_to_read' => $request->min_to_read,
             'image_path' => $request->file('image_path')->store('images'),
             'is_published' => $request->is_published === 'on',
+        ]);
+
+        $post->meta()->create([
+            'post_id'=> $post->id,
+            'meta_description' => $request->meta_description,
+            'meta_keywords' => $request->meta_keywords,
+            'meta_robots' => $request->meta_robots
         ]);
 
         return redirect(route('posts.index'));
@@ -57,7 +66,7 @@ class PostsController extends Controller
         $post = Post::where('id',$id);
     
         $post->update([
-            ...$request->except(['_token', '_method']),
+            ...$request->except(['_token', '_method', 'meta_description', 'meta_keywords', 'meta_robots']),
             'is_published' => $request->is_published === 'on',
         ]);
 
@@ -66,6 +75,12 @@ class PostsController extends Controller
                 'image_path' => $request->file('image_path')->store('images'),
             ]);
         }
+
+        $post->meta()->update([
+            'meta_description' => $request->meta_description,
+            'meta_keywords' => $request->meta_keywords,
+            'meta_robots' => $request->meta_robots
+        ]);
 
         return redirect(route('posts.show', $id));
     }
