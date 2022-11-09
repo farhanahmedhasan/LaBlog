@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('post_metas', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('post_id');
-            $table->string('meta_description')->nullable();
-            $table->string('meta_keywords')->nullable();
-            $table->string('meta_robots')->nullable();
+            $table->string('title');
             $table->timestamps();
-            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
         });
     }
 
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('post_metas');
+        Schema::dropIfExists('categories');
     }
 };

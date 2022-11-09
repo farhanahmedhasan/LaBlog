@@ -4,11 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Models\Post;
+use App\Models\PostMeta;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
 {
+
+    public function __construct()
+    {   
+        return $this->middleware(['auth'])->only(['create', 'store', 'edit', 'update', 'destroy']);
+    }
+
     public function index()
     {
        $posts =  Post::orderBy('updated_at', 'desc')->paginate(20);    
@@ -63,8 +70,8 @@ class PostsController extends Controller
     public function update(PostRequest $request, int $id)
     {   
 
-        $post = Post::where('id',$id);
-    
+        $post = Post::where('id', $id);
+
         $post->update([
             ...$request->except(['_token', '_method', 'meta_description', 'meta_keywords', 'meta_robots']),
             'is_published' => $request->is_published === 'on',
@@ -76,7 +83,12 @@ class PostsController extends Controller
             ]);
         }
 
-        $post->first()->meta()->update([
+
+
+        PostMeta::updateOrCreate([
+            'post_id' => $post->first()->id
+        ],
+        [
             'meta_description' => $request->meta_description,
             'meta_keywords' => $request->meta_keywords,
             'meta_robots' => $request->meta_robots

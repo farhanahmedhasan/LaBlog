@@ -60,14 +60,15 @@
                 </div>
 
                 <input type="text" name="meta_description" placeholder="Meta description..."
-                    value={{ $post->meta->meta_description }}
+                    value="{{ $post->meta->meta_description ?? ' ' }}"
                     class="bg-transparent block border-b-2 w-full h-20 text-2xl outline-none">
 
                 <input type="text" name="meta_keywords" placeholder="Meta keywords..."
-                    value={{ $post->meta->meta_keywords }}
+                    value="{{ $post->meta->meta_keywords ?? ' ' }}"
                     class="bg-transparent block border-b-2 w-full h-20 text-2xl outline-none">
 
-                <input type="text" name="meta_robots" placeholder="Meta robots..." value={{ $post->meta->meta_robots }}
+                <input type="text" name="meta_robots" placeholder="Meta robots..."
+                    value="{{ $post->meta->meta_robots ?? ' ' }}"
                     class="bg-transparent block border-b-2 w-full h-20 text-2xl outline-none mb-8">
 
 

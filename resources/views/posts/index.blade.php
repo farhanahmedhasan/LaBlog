@@ -2,7 +2,7 @@
 
 @section('appLayout')
     <section>
-        <div class="w-4/5 mx-auto">
+        <div class="w-4/5 mx-auto mb-8">
             <div class="text-center pt-20">
                 <h1 class="text-3xl text-gray-700">
                     All Articles
@@ -10,12 +10,14 @@
                 <hr class="border border-1 border-gray-300 mt-10">
             </div>
 
-            <div class="py-10 sm:py-20">
-                <a class="primary-btn inline text-base sm:text-xl bg-green-500 py-4 px-4 shadow-xl rounded-full transition-all hover:bg-green-400"
-                    href="{{ route('posts.create') }}">
-                    New Article
-                </a>
-            </div>
+            @if (Auth::user())
+                <div class="py-10 sm:py-20">
+                    <a class="primary-btn inline text-base sm:text-xl bg-green-500 py-4 px-4 shadow-xl rounded-full transition-all hover:bg-green-400"
+                        href="{{ route('posts.create') }}">
+                        New Article
+                    </a>
+                </div>
+            @endif
         </div>
 
         @if (session()->has('message'))
@@ -52,19 +54,22 @@
                             {{ $post->updated_at->diffforhumans() }}
                         </span>
 
-                        <a class="block italic text-green-500 border-b-1 border-green-500"
-                            href="{{ route('posts.edit', $post->id) }}">
-                            Edit
-                        </a>
+                        @if (Auth::id() === $post->user->id)
+                            <a class="block italic text-green-500 border-b-1 border-green-500"
+                                href="{{ route('posts.edit', $post->id) }}">
+                                Edit
+                            </a>
 
-                        <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
+                            <form action="{{ route('posts.destroy', $post->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
 
-                            <button class="pt-3 pr-3 text-red-500" type="submit">
-                                Delete
-                            </button>
-                        </form>
+                                <button class="pt-3 pr-3 text-red-500" type="submit">
+                                    Delete
+                                </button>
+                            </form>
+                        @endif
+
                     </div>
                 </div>
             </div>
